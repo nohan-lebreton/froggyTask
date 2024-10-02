@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useTaskListStore } from '@/stores/taskList'
+import { useTaskListStore } from '@/views/TaskList/taskList'
 import { usePopupStore } from '@/stores/popup'
 
 const taskList = useTaskListStore()

@@ -1,26 +1,7 @@
 <script setup>
-import AppFrog from './views/AppFrog.vue'
-import AppHeader from './components/AppHeader.vue'
-import AppTaskLIst from './components/AppTaskList.vue'
+import TheLayout from './views/TheLayout/TheLayout.vue'
 </script>
 
 <template>
-  <div class="app-container">
-    <AppFrog />
-    <AppHeader />
-    <AppTaskLIst />
-  </div>
+  <TheLayout />
 </template>
-
-<style scoped>
-.app-container {
-  width: 400px;
-  height: 800px;
-  margin: 0 auto;
-  border-radius: 20px;
-  background-color: #15b392;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-</style>

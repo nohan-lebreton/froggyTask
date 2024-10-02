@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 
-import { useTaskListStore } from '../stores/taskList'
+import { useTaskListStore } from '@/views/TaskList/taskList'
 import { usePopupStore } from '@/stores/popup'
 const popupStore = usePopupStore()
 const taskList = useTaskListStore()
@@ -24,6 +24,8 @@ function toggleTaskInList(task) {
 <template>
   <div class="taskList">
     <div v-for="task in taskList.list" :key="task.id" class="list">
+      <TaskLIstTask @toto="removeTaskInList(task)" />
+
       <div class="task">
         <img
           v-if="!task.done"

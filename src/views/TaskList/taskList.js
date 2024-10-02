@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import Task from '@/stores/task'
-import LocalStoragePersistance from './localStoragePersistance'
+import Task from './task'
+import LocalStoragePersistance from '@/stores/localStoragePersistance'
+
 export const useTaskListStore = defineStore('taskList', {
   //state
   //getters

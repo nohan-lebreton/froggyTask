@@ -5,7 +5,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  cursor: url('src/assets/img/fly.gif'), pointer;
+  cursor: url('src/assets/img/fly.png'), pointer;
 }
 
 @font-face {
