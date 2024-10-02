@@ -1,52 +1,50 @@
 <script setup>
+import { onMounted } from 'vue'
+
 import { useTaskListStore } from '../stores/taskList'
 import { usePopupStore } from '@/stores/popup'
-import { storeToRefs } from 'pinia'
-
 const popupStore = usePopupStore()
-const taskListStore = useTaskListStore()
+const taskList = useTaskListStore()
 
-const { list } = storeToRefs(taskListStore)
+onMounted(() => {
+  taskList.loadTasks()
+})
 
-function handleRemove(taskID) {
-  const msg = taskListStore.remove(taskID)
-  popupStore.showPopup(msg)
+function removeTaskInList(task) {
+  taskList.remove(task)
+  popupStore.showPopup('Task removed')
 }
 
-function handleDone(task) {
-  task.markAsDone()
-  console.log(task.label)
-}
-
-function handleRename(task) {
-  task.rename('ouiiiiiiiiii')
+function toggleTaskInList(task) {
+  taskList.toggleTask(task)
+  popupStore.showPopup('Task toggled')
 }
 </script>
 
 <template>
   <div class="taskList">
-    <div v-for="task in list" :key="task.id" class="list">
+    <div v-for="task in taskList.list" :key="task.id" class="list">
       <div class="task">
         <img
           v-if="!task.done"
           src="../assets/img/notDone.svg"
           alt="Not Done"
           class="task-icon"
-          @click="handleDone(task)"
+          @click="toggleTaskInList(task)"
         />
         <img
           v-if="task.done"
           src="../assets/img/done.svg"
           alt="Done"
           class="task-icon"
-          @click="handleDone(task)"
+          @click="toggleTaskInList(task)"
         />
-        <span :class="{ done: task.done }" @click="handleRename(task)">{{ task.label }}</span>
+        <span :class="{ done: task.done }">{{ task.label }}</span>
         <img
           src="../assets/img/trash.svg"
           alt="Trash"
           class="trash-icon"
-          @click="handleRemove(task.id)"
+          @click="removeTaskInList(task)"
         />
       </div>
     </div>

@@ -1,5 +1,5 @@
 <script setup>
-import AppFrog from './components/AppFrog.vue'
+import AppFrog from './views/AppFrog.vue'
 import AppHeader from './components/AppHeader.vue'
 import AppTaskLIst from './components/AppTaskList.vue'
 </script>

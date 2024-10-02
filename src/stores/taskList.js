@@ -1,42 +1,47 @@
 import { defineStore } from 'pinia'
-import { useTaskStore } from '@/stores/task'
-import { v4 as uuidv4 } from 'uuid'
-
+import Task from '@/stores/task'
+import LocalStoragePersistance from './localStoragePersistance'
 export const useTaskListStore = defineStore('taskList', {
   //state
   //getters
   //actions
   state: () => ({
+    persistance: new LocalStoragePersistance(),
     list: []
   }),
   actions: {
-    add(label) {
-      if (label == '') {
-        return 'Write a task'
-      } else if (label.length > 20) {
-        return 'Task should be shorter'
-      } else {
-        const taskStore = useTaskStore()
-        taskStore.id = uuidv4()
-        taskStore.label = label
-        this.list.push({ ...taskStore.$state })
-        return 'Task added successfully!'
+    saveTasks() {
+      this.persistance.save('taskList', this.list)
+    },
+    loadTasks() {
+      const savedTasks = this.persistance.load('taskList')
+      if (savedTasks) {
+        this.list = savedTasks.map(
+          (taskData) => new Task(taskData.label, taskData.done, taskData.id)
+        )
       }
     },
-    remove(taskId) {
-      this.list = this.list.filter((task) => task.id !== taskId)
-      return 'Task deleted'
+    createTask(taskLabel) {
+      const task = new Task(taskLabel)
+      this.add(task)
+      this.saveTasks()
     },
-    rerank(task, newPos) {
-      const taskIndex = this.list.indexOf(task)
+    add(task) {
+      this.list.push(task)
+      this.saveTasks()
+      console.log(this.list)
+    },
+    remove(task) {
+      const taskIndex = this.indexOf(task)
       this.list.splice(taskIndex, 1)
-      this.list.splice(newPos, 0, task)
+      this.saveTasks()
+      console.log(this.list)
+      console.log(this.persistance)
     },
-    copy() {
-      const taskListCopy = this.list.slice()
-      return taskListCopy
+    indexOf(task) {
+      return this.list.indexOf(task)
     },
-    search(input) {
+    searchTask(input) {
       const searchList = []
       this.list.forEach((task) => {
         if (task.label.includes(input) == true) {
@@ -44,6 +49,10 @@ export const useTaskListStore = defineStore('taskList', {
         }
       })
       return searchList
+    },
+    toggleTask(task) {
+      task.toggle()
+      this.saveTasks()
     }
   }
 })

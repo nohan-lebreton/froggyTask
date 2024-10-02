@@ -1,26 +1,49 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useTaskListStore } from '@/stores/taskList'
 import { usePopupStore } from '@/stores/popup'
 
-const store = useTaskListStore()
-const input = ref('')
+const taskList = useTaskListStore()
+const addInputLabel = ref('')
+const searchInputLabel = ref('')
 const popupStore = usePopupStore()
 
-function handleSubmit() {
-  const msg = store.add(input.value)
-  popupStore.showPopup(msg)
-  input.value = ''
-  console.log(store.list)
+function createTaskInList() {
+  if (addInputLabel.value == '') {
+    popupStore.showPopup('Write as task')
+    return
+  }
+  if (addInputLabel.value.length > 20) {
+    popupStore.showPopup('Task too long')
+    return
+  }
+  taskList.createTask(addInputLabel.value)
+  popupStore.showPopup('Task added')
+  addInputLabel.value = ''
 }
+
+function searchTaskInList() {
+  if (searchInputLabel.value === '') {
+    taskList.loadTasks()
+  }
+  const searchList = taskList.searchTask(searchInputLabel.value)
+  taskList.list = searchList
+  popupStore.showPopup('You search a task')
+}
+
+watch(searchInputLabel, () => {
+  searchTaskInList()
+})
 </script>
 <template>
   <div class="todo-app">
     <h1>Kata Task List</h1>
-    <form @submit.prevent="handleSubmit()">
-      <input v-model="input" type="text" placeholder="Write a task ..." /><button class="btn-add">
-        Add
-      </button>
+    <form @submit.prevent="createTaskInList()">
+      <input v-model="addInputLabel" type="text" placeholder="Write a task ..." />
+      <button class="btn-add" type="submit">Add</button>
+    </form>
+    <form>
+      <input v-model="searchInputLabel" type="text" placeholder="Search a task ..." />
     </form>
 
     <transition name="fade">
@@ -35,7 +58,7 @@ function handleSubmit() {
 .todo-app {
   background-color: #54c392;
   width: 400px;
-  height: 150px;
+  height: 200px;
   border-radius: 20px 20px 0px 0px;
   text-align: center;
 }
@@ -45,14 +68,15 @@ input {
   outline: none;
   padding-left: 10px;
   width: 60%;
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 20px 20px 20px 20px;
+  margin-top: 10px;
 }
 
 .btn-add {
   background-color: #f9ea4b;
   width: 10%;
   height: 32px;
-  margin-left: -20px;
+  margin-left: -30px;
   border-radius: 20px 20px 20px 20px;
   border-style: hidden;
 }
@@ -61,11 +85,25 @@ input {
   background-color: #f9d94b;
 }
 
+.btn-search {
+  background-color: #b7caff;
+  margin-top: 10px;
+  width: 15%;
+  height: 32px;
+  margin-left: -20px;
+  border-radius: 20px 20px 20px 20px;
+  border-style: hidden;
+}
+
+.btn-search:hover {
+  background-color: #80a2ff;
+}
+
 /* POPUP */
 .popup {
   position: absolute;
-  top: 200px;
-  left: 60%;
+  top: 120px;
+  left: 58%;
   transform: translate(-50%, -50%);
   background-color: #ffffff;
   color: rgb(0, 0, 0);
