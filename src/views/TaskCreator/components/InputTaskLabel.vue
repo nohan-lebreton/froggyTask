@@ -5,7 +5,6 @@ import { usePopupStore } from '@/stores/popup'
 
 const taskList = useTaskListStore()
 const addInputLabel = ref('')
-const searchInputLabel = ref('')
 const popupStore = usePopupStore()
 
 function createTaskInList() {
@@ -21,29 +20,17 @@ function createTaskInList() {
   popupStore.showPopup('Task added')
   addInputLabel.value = ''
 }
-
-function searchTaskInList() {
-  if (searchInputLabel.value === '') {
-    taskList.loadTasks()
-  }
-  const searchList = taskList.searchTask(searchInputLabel.value)
-  taskList.list = searchList
-  popupStore.showPopup('You search a task')
-}
-
-watch(searchInputLabel, () => {
-  searchTaskInList()
-})
 </script>
 <template>
   <div class="todo-app">
-    <h1>Kata Task List</h1>
     <form @submit.prevent="createTaskInList()">
-      <input v-model="addInputLabel" type="text" placeholder="Write a task ..." />
-      <button class="btn-add" type="submit">Add</button>
-    </form>
-    <form>
-      <input v-model="searchInputLabel" type="text" placeholder="Search a task ..." />
+      <input
+        v-model="addInputLabel"
+        type="text"
+        placeholder="Write a task ..."
+        data-testid="task-input"
+      />
+      <button class="btn-add" type="submit" data-testid="submit-task">Add</button>
     </form>
 
     <transition name="fade">
@@ -56,9 +43,7 @@ watch(searchInputLabel, () => {
 
 <style scoped>
 .todo-app {
-  background-color: #54c392;
   width: 400px;
-  height: 200px;
   border-radius: 20px 20px 0px 0px;
   text-align: center;
 }
@@ -83,20 +68,6 @@ input {
 
 .btn-add:hover {
   background-color: #f9d94b;
-}
-
-.btn-search {
-  background-color: #b7caff;
-  margin-top: 10px;
-  width: 15%;
-  height: 32px;
-  margin-left: -20px;
-  border-radius: 20px 20px 20px 20px;
-  border-style: hidden;
-}
-
-.btn-search:hover {
-  background-color: #80a2ff;
 }
 
 /* POPUP */

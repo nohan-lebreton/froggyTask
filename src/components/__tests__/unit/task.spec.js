@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import Task from '@/stores/task'
+import Task from '@/views/TaskList/task'
 
 describe('Task tests', () => {
   test('can create a Task', () => {

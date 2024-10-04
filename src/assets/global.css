@@ -1,16 +1,13 @@
 body {
   background-color: #15b392;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   cursor: url('src/assets/img/fly.png'), pointer;
 }
 
 @font-face {
   font-family: 'JapanRich';
-  src: url('@/assets/fonts/JapanRich-Regular.ttf') format('truetype');
+  src: url('@/assets/fonts/HOWDY LEMON.TTF');
   font-weight: normal;
   font-style: normal;
 }
@@ -18,4 +15,5 @@ body {
 h1 {
   color: white;
   font-family: 'JapanRich', sans-serif;
+  text-align: center;
 }

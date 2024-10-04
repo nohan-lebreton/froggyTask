@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
-import { useTaskListStore } from '@/stores/taskList'
-import Task from '@/stores/task'
+import { useTaskListStore } from '@/views/TaskList/taskList'
+import Task from '@/views/TaskList/task'
 
 describe('TaskList store tests', () => {
   let taskListStore

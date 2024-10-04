@@ -3,6 +3,10 @@ import { onMounted } from 'vue'
 
 import { useTaskListStore } from '@/views/TaskList/taskList'
 import { usePopupStore } from '@/stores/popup'
+import TaskListTask from './components/TaskListTask.vue'
+import TheFrog from './components/TheFrog.vue'
+import TaskListSearch from './components/TaskListSearch.vue'
+
 const popupStore = usePopupStore()
 const taskList = useTaskListStore()
 
@@ -23,77 +27,12 @@ function toggleTaskInList(task) {
 
 <template>
   <div class="taskList">
+    <TheFrog />
+    <TaskListSearch />
     <div v-for="task in taskList.list" :key="task.id" class="list">
-      <TaskLIstTask @toto="removeTaskInList(task)" />
-
-      <div class="task">
-        <img
-          v-if="!task.done"
-          src="../assets/img/notDone.svg"
-          alt="Not Done"
-          class="task-icon"
-          @click="toggleTaskInList(task)"
-        />
-        <img
-          v-if="task.done"
-          src="../assets/img/done.svg"
-          alt="Done"
-          class="task-icon"
-          @click="toggleTaskInList(task)"
-        />
-        <span :class="{ done: task.done }">{{ task.label }}</span>
-        <img
-          src="../assets/img/trash.svg"
-          alt="Trash"
-          class="trash-icon"
-          @click="removeTaskInList(task)"
-        />
-      </div>
+      <TaskListTask :task="task" @delete="removeTaskInList" @toggle="toggleTaskInList" />
     </div>
   </div>
 </template>
 
-<style scoped>
-.taskList {
-  background-color: #73ec8b;
-  width: 400px;
-  height: 500px;
-  border-radius: 20px 20px 20px 20px;
-  margin-top: -20px;
-  overflow: auto;
-}
-
-.task {
-  background-color: #f9ea4b;
-  display: flex;
-  align-items: center;
-  margin: auto;
-  margin-top: 20px;
-  width: 350px;
-  border-radius: 20px 20px 20px 20px;
-  height: 60px;
-}
-
-.task:hover {
-  background-color: #f9d94b;
-  width: 354px;
-}
-
-.task-icon {
-  width: 20px;
-  height: 20px;
-  margin: 15px;
-}
-
-.trash-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 15px;
-  margin-left: auto;
-}
-
-.done {
-  text-decoration: line-through;
-  color: gray;
-}
-</style>
+<style scoped></style>

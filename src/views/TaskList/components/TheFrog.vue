@@ -10,13 +10,11 @@
         </div>
       </div>
     </section>
-    <img :src="frogImage" alt="Frog" />
+    <img src="/img/frog.png" alt="Frog" />
   </div>
 </template>
 
 <script setup>
-import frogImage from '@/assets/img/frog.png'
-
 document.querySelector('body').addEventListener('mousemove', eyeball)
 function eyeball() {
   'use strict'
