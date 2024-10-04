@@ -2,6 +2,9 @@
 import { ref } from 'vue'
 import Chart from 'primevue/chart'
 import ProgressBar from 'primevue/progressbar'
+import Knob from 'primevue/knob'
+
+const value = ref(0)
 
 const chartData = ref({
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -45,15 +48,14 @@ const chartOptions = ref({
 </script>
 
 <template>
-  <div class="comboChart">
+  <div class="dashboard">
     <h1>DASHBOARD</h1>
-    <ProgressBar :value="50"></ProgressBar>
-    <Chart type="bar" :data="chartData" :options="chartOptions" class="w-full md:w-[30rem]" />
+    <Chart type="bar" :data="chartData" d :options="chartOptions" class="w-full md:w-[30rem]" />
   </div>
 </template>
 
 <style scoped>
-.comboChart {
+.dashboard {
   background-color: #79c23e;
   height: 100vh;
 }

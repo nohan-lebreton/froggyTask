@@ -16,13 +16,14 @@ import TaskList from '@/views/TaskList/TaskList.vue'
 .layout {
   display: flex;
   justify-content: space-evenly;
+  margin-top: 20px;
 }
 
 .layout > * {
   flex: 1;
   max-width: 400px;
   /*background-color: #73ec8b;*/
-  height: 100vh;
+  height: calc(100vh - 40px);
   border-radius: 20px 20px 20px 20px;
 }
 </style>

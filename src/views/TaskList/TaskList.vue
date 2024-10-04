@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted } from 'vue'
-
 import { useTaskListStore } from '@/views/TaskList/taskList'
 import { usePopupStore } from '@/stores/popup'
 import TaskListTask from './components/TaskListTask.vue'
 import TheFrog from './components/TheFrog.vue'
 import TaskListSearch from './components/TaskListSearch.vue'
+import TaskListProgress from './components/TaskListProgress.vue'
 
 const popupStore = usePopupStore()
 const taskList = useTaskListStore()
@@ -28,6 +28,7 @@ function toggleTaskInList(task) {
 <template>
   <div class="taskList">
     <TheFrog />
+    <TaskListProgress />
     <TaskListSearch />
     <div v-for="task in taskList.list" :key="task.id" class="list">
       <TaskListTask :task="task" @delete="removeTaskInList" @toggle="toggleTaskInList" />

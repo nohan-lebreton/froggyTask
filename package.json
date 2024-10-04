@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.7",
     "@testing-library/jest-dom": "^6.5.0",
     "chart.js": "^4.4.4",
     "pinia": "^2.1.7",
